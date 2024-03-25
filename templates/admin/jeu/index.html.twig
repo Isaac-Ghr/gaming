@@ -5,6 +5,10 @@
 
 {% block body %}
 <h1>Gestion des jeux</h1>
+{{ form_start(formJeu) }}
+{{ form_row(formJeu.titre, {'label': 'Titre du jeu'}) }}
+<input type="submit" class="btn btn-dark mt-2" value="rechercher" />
+{{ form_end(formJeu) }}
 <a class="btn btn-success mb-2" href="{{path('app_admin_jeu_ajout')}}">Ajouter un jeu</a>
 <div class="d-flex flex-column gap-2 mb-5">
     {% for jeu in jeux %}

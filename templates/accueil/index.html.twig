@@ -4,6 +4,14 @@
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
 {% block body %}
+    {# formulaire #}
+    <section>
+        <h2>Recherche rapide</h2>
+        {{ form_start(formJeu) }}
+        {{ form_row(formJeu.titre, {'label': 'Titre du jeu'}) }}
+        <input type="submit" class="btn btn-dark mt-2" value="rechercher" />
+        {{ form_end(formJeu) }}
+    </section>
     {# données sur le site #}
     <section class="">
         <h2>ThrowGaming en quelques nombres, c'est...</h2>

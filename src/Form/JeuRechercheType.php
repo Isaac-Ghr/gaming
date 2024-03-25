@@ -14,7 +14,7 @@ class JeuRechercheType extends AbstractType
     {
         $builder
         ->add('titre', TextType::class, [
-            "attr"=>["placeholder"=>"Titre du jeu"],
+            "attr"=>["placeholder"=>"Saisissez le nom d'un jeu"],
             "required"=>false
         ])
         ;
