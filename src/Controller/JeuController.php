@@ -10,19 +10,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\JeuRechercheType;
 
 class JeuController extends AbstractController
 {
     #[Route('/jeux', name: 'app_jeu')]
     public function listeJeu(JeuRepository $repo, PaginatorInterface $p, Request $r): Response
     {
+        $titre = null;
+        
+        $form = $this->createForm(JeuRechercheType::class);
+        $form->handleRequest($r);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $titre = $form->get('titre')->getData();
+        }
+
         $jeux = $p->paginate(
-            $repo->listePagine(),
+            $repo->listeFiltrePagine($titre),
             $r->query->getInt('page', 1),
             6
         );
         return $this->render('jeu/listeJeu.html.twig', [
             'controller_name' => 'JeuController',
+            'formJeu' => $form->createView(),
             'jeux' => $jeux,
         ]);
     }

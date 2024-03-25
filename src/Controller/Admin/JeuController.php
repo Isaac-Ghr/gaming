@@ -2,29 +2,40 @@
 
 namespace App\Controller\Admin;
 
-use App\Repository\JeuRepository;
 use App\Entity\Jeu;
 use App\Form\JeuType;
+use App\Form\JeuRechercheType;
 
+use App\Repository\JeuRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class JeuController extends AbstractController
 {
     #[Route('/admin/jeux', name: 'app_admin_jeux')]
     public function liste(JeuRepository $repo, PaginatorInterface $p, Request $r): Response
     {
+        $titre = null;
+        
+        $form = $this->createForm(JeuRechercheType::class);
+        $form->handleRequest($r);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $titre = $form->get('titre')->getData();
+        }
+        
         $jeux = $p->paginate(
-            $repo->listePagine(),
+            $repo->listeFiltrePagine($titre),
             $r->query->getInt('page', 1),
             6
         );
         return $this->render('admin/jeu/index.html.twig', [
             'controller_name' => 'JeuController',
+            'formJeu' => $form->createView(),
             'jeux' => $jeux,
         ]);
     }

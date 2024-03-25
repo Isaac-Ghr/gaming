@@ -4,6 +4,10 @@
 
 {% block body %}
    <h1 class="text-center text-2xl">Catalogue</h1>
+   {{ form_start(formJeu) }}
+   {{ form_row(formJeu.titre, {'label': 'Titre du jeu'}) }}
+   <input type="submit" class="btn btn-dark mt-2" value="rechercher" />
+   {{ form_end(formJeu) }}
     <div class="row">
     {% for jeu in jeux %}
         {% set editeur = jeu.editeur %}

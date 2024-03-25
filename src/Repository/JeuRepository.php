@@ -65,15 +65,33 @@ class JeuRepository extends ServiceEntityRepository
    /**
     * @return Query Returns query
     */
-   public function listePagine(): Query
-   {
-       return $this->createQueryBuilder('j')
-           ->select('j')
-           ->distinct()
-           ->orderBy('j.titre', 'ASC')
-           ->getQuery()
-       ;
-   }
+    public function listePagine(): Query
+    {
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->distinct()
+            ->orderBy('j.titre', 'ASC')
+            ->getQuery()
+        ;
+    }
+   
+    /**
+    * @return Query Returns query
+    */
+    public function listeFiltrePagine(?string $titre): Query
+    {
+        $query = $this->createQueryBuilder('j')
+            ->select('j')
+            ->orderBy('j.titre', 'ASC')
+        ;
+
+        if ($titre) {
+            $query->andWhere('j.titre like :t')
+            ->setParameter(':t', "%{$titre}%");
+        }
+
+        return $query->getQuery();
+    }
 
 //    /**
 //     * @return Jeu[] Returns an array of Jeu objects
