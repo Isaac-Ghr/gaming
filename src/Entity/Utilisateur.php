@@ -64,7 +64,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->panier = new ArrayCollection();
-        $this->librairie = new ArrayCollection();
     }
 
     public function getId(): ?int

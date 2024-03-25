@@ -102,7 +102,6 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'class' => $this->tInput,
                 ],
                 'constraints' => [
                     new NotBlank([
