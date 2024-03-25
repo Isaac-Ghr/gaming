@@ -1,4 +1,9 @@
 {% set utilisateur = app.user %}
+{% if utilisateur != null %}
+    {% set isAdmin = utilisateur.roles[0] == "ROLE_ADMIN" %}
+    {% else %}
+    {% set isAdmin = false %}
+{% endif %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +20,48 @@
             <div class="d-flex container">
                 <div class="flex-grow-1 d-flex align-items-baseline">
                     <a class="navbar-brand" href="{{path('app_accueil')}}">ThrowGaming</a>
-
                     <ul class="navbar-nav">
+                    {% if isAdmin %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Jeux
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{path('app_jeu')}}">Liste normale</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_jeux')}}">Liste admin</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_jeu_ajout')}}">Ajouter un jeu</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Editeurs
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{path('app_editeur')}}">Liste normale</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_editeurs')}}">Liste admin</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_editeur_ajout')}}">Ajouter un éditeurs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Consoles
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{path('app_console')}}">Liste normale</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_console')}}">Liste admin</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_console_ajout')}}">Ajouter un consoles</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genres
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{path('app_admin_genres')}}">Liste admin</a></li>
+                                <li><a class="dropdown-item" href="{{path('app_admin_genre_ajout')}}">Ajouter un genre</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
                         <li class="nav-item">
                         <a class="nav-link" href="{{path('app_jeu')}}">les jeux</a>
                         </li>
@@ -26,6 +71,7 @@
                         <li class="nav-item">
                         <a class="nav-link" href="{{path('app_editeur')}}">les éditeurs</a>
                         </li>
+                    {% endif %}
                     </ul>
                 </div>
                 {# <form class="form-inline my-2 my-lg-0">
